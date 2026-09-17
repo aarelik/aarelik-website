@@ -166,9 +166,19 @@ test('the hidden attribute is never defeated by a display rule', () => {
   const hiddenEls = [...html.matchAll(/<[^>]*\bclass="([^"]+)"[^>]*\shidden[^>]*>/g)]
     .map((m) => m[1].split(/\s+/));
 
-  assert.ok(hiddenEls.length > 0, 'expected elements using the hidden attribute');
+  // Also cover classes JS hides at runtime — those never appear with a hidden
+  // attribute in the markup, so a markup-only scan misses them entirely.
+  const jsHidden = [...js.matchAll(/(\w+)\.hidden\s*=\s*true/g)]
+    .map((m) => m[1])
+    .flatMap((v) => {
+      const decl = js.match(new RegExp(`var ${v} = \\w+\\.querySelector\\('\\.([a-z-]+)'\\)`));
+      return decl ? [[decl[1]]] : [];
+    });
 
-  for (const classes of hiddenEls) {
+  const all = [...hiddenEls, ...jsHidden];
+  assert.ok(all.length > 0, 'expected elements using the hidden attribute');
+
+  for (const classes of all) {
     const styled = classes.filter((c) =>
       new RegExp(`\\.${c}\\s*\\{[^}]*display:`, 'm').test(css));
     if (!styled.length) continue;
@@ -184,14 +194,48 @@ test('reduced-motion preference is honored', () => {
   assert.ok(css.includes('prefers-reduced-motion'));
 });
 
-test('the light palette is reachable', () => {
-  // The light block is guarded by :root:not([data-theme="dark"]). Hardcoding
-  // that attribute in the markup would make the whole palette dead code.
-  assert.ok(css.includes('prefers-color-scheme: light'), 'expected a light palette');
+test('the alternate colour palette is reachable', () => {
+  // Light is the default; dark is the variant. Whichever way round it is, the
+  // variant is guarded by :root:not([data-theme=...]) and pinning that
+  // attribute in the markup would turn the whole palette into dead code.
+  assert.match(css, /@media \(prefers-color-scheme: (dark|light)\)/,
+    'expected an alternate palette behind a prefers-color-scheme query');
   for (const page of ['index.html', '404.html']) {
-    assert.doesNotMatch(read(page), /<html[^>]*data-theme="dark"/,
-      `${page} pins data-theme="dark", so the light palette can never apply`);
+    assert.doesNotMatch(read(page), /<html[^>]*data-theme=/,
+      `${page} pins data-theme, so the alternate palette can never apply`);
   }
+});
+
+test('every design-system colour token is defined', () => {
+  // The system's palette is the contract; a missing token silently falls back
+  // to an inherited colour and quietly breaks the confetti rotation.
+  for (const token of ['--bg', '--fg', '--muted', '--muted-fg', '--card', '--border',
+                       '--accent', '--accent-fg', '--secondary', '--tertiary',
+                       '--quaternary', '--ring', '--border-ink', '--shadow-ink',
+                       '--blob', '--blob-op']) {
+    assert.ok(css.includes(`${token}:`), `missing design token ${token}`);
+  }
+});
+
+test('hard shadows carry no blur', () => {
+  // "Pop" shadows are cut-paper, not glows. Third offset must be 0.
+  const shadows = [...css.matchAll(/box-shadow:\s*([^;]+);/g)]
+    .map((m) => m[1].trim())
+    .filter((v) => v !== 'none');  // colours are var()s; the offsets are literal
+  assert.ok(shadows.length > 0, 'expected hard shadows');
+  for (const shadow of shadows) {
+    const blur = shadow.match(/^-?[\d.]+px\s+-?[\d.]+px\s+(-?[\d.]+)px/);
+    if (blur) {
+      assert.equal(blur[1], '0', `blurred shadow breaks the cut-paper look: ${shadow}`);
+    }
+  }
+});
+
+test('bounce and wiggle are disabled under reduced motion', () => {
+  const block = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.ok(block.includes('.marquee-track'), 'the marquee must stop');
+  assert.ok(block.includes('.card-sticker'), 'the wiggle must stop');
+  assert.ok(block.includes('animation-duration'), 'entrance pops must be neutralised');
 });
 
 /* ---------- injection safety ---------- */
