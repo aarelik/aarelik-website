@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aarelik — Roblox Games</title>
+<meta name="description" content="Roblox games by Aarelik. What's live, what's in development, and what's coming next.">
+<meta property="og:title" content="Aarelik — Roblox Games">
+<meta property="og:description" content="Roblox games by Aarelik. What's live, what's in development, and what's coming next.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0e1116" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#games">Skip to games</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Aarelik</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#games">Games</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">Roblox developer</p>
+      <h1 class="hero-title">Games, in the making.</h1>
+      <p class="hero-lede">
+        Everything I'm building on Roblox lives here — what's playable now,
+        what's in development, and what's next on the list.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#games">See the games</a>
+        <a class="btn btn-ghost" href="#about">About me</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="games" class="games" aria-labelledby="games-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="games-heading">Games</h2>
+        <div class="filters" role="group" aria-label="Filter games by status" hidden>
+          <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter" data-filter="live" aria-pressed="false">Live</button>
+          <button type="button" class="filter" data-filter="in-development" aria-pressed="false">In development</button>
+          <button type="button" class="filter" data-filter="planned" aria-pressed="false">Planned</button>
+        </div>
+      </div>
+
+      <div id="game-grid" class="grid" role="list"></div>
+
+      <p id="grid-status" class="visually-hidden" role="status" aria-live="polite"></p>
+
+      <div id="empty-state" class="empty" hidden>
+        <span class="empty-glyph" aria-hidden="true"></span>
+        <h3>No games published yet</h3>
+        <p>
+          The first one is in the works. This page updates the moment it goes
+          live — check back, or follow along on Roblox.
+        </p>
+        <p class="empty-hint">
+          <a href="?demo=1">Preview with sample games</a>
+        </p>
+      </div>
+
+      <div id="error-state" class="empty empty-error" hidden>
+        <h3>Couldn't load the game list</h3>
+        <p id="error-detail">Something went wrong reading the data file.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about" aria-labelledby="about-heading">
+    <div class="wrap">
+      <div class="about-inner">
+      <h2 id="about-heading">About</h2>
+      <p>
+        I'm Aarelik. I build games on Roblox — mostly because I like the part
+        where an idea turns into something other people can actually play.
+      </p>
+      <p>
+        This site is the running record of that: every project gets listed here
+        from the moment it's more than an idea, through development, to release.
+      </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year">2026</span> Aarelik</p>
+    <p class="footer-note">Not affiliated with or endorsed by Roblox Corporation.</p>
+  </div>
+</footer>
+
+<template id="game-card-template">
+  <article class="card" role="listitem">
+    <div class="card-media">
+      <img class="card-img" alt="" loading="lazy" hidden>
+      <span class="card-fallback" aria-hidden="true"></span>
+      <span class="badge"></span>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title"></h3>
+      <p class="card-tagline"></p>
+      <p class="card-description"></p>
+      <ul class="card-tags" aria-label="Tags"></ul>
+    </div>
+    <div class="card-foot">
+      <a class="card-cta btn btn-primary" hidden>Play on Roblox</a>
+      <span class="card-meta"></span>
+    </div>
+  </article>
+</template>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

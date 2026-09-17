@@ -1,0 +1,5 @@
+# Loki runtime state — session/queue/proof data, not source
+.loki/
+
+node_modules/
+.DS_Store
