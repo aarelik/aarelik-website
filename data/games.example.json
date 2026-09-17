@@ -1,0 +1,31 @@
+{
+  "$schema": "./games.schema.json",
+  "games": [
+    {
+      "id": "tower-of-nope",
+      "title": "Tower of Nope",
+      "status": "live",
+      "tagline": "120 floors. No checkpoints. Good luck.",
+      "description": "A precision obby built around a single rule: you fall, you start over. Every floor is hand-placed and tested to be possible — barely.",
+      "url": "https://www.roblox.com/games/000000000/Tower-of-Nope",
+      "tags": ["obby", "difficult", "singleplayer"],
+      "releaseDate": "2026-03-14"
+    },
+    {
+      "id": "deep-harbor",
+      "title": "Deep Harbor",
+      "status": "in-development",
+      "tagline": "Salvage a drowned city before the tide turns.",
+      "description": "Co-op underwater exploration for up to four players. Oxygen is the currency and the clock.",
+      "tags": ["co-op", "exploration", "survival"],
+      "releaseDate": "2026-11-01"
+    },
+    {
+      "id": "signal-lost",
+      "title": "Signal Lost",
+      "status": "planned",
+      "tagline": "A radio, a forest, and something answering back.",
+      "tags": ["horror", "atmospheric"]
+    }
+  ]
+}
