@@ -63,8 +63,14 @@ for (const file of DATA_FILES) {
   });
 }
 
-test('data/games.json ships empty — sample games never reach production', () => {
-  assert.equal(readJson('data/games.json').games.length, 0);
+test('sample games never reach production data', () => {
+  // games.json started empty; it holds real games now. The thing worth
+  // guarding is that the example entries never get copied in wholesale.
+  const sampleIds = new Set(readJson('data/games.example.json').games.map((g) => g.id));
+  for (const game of readJson('data/games.json').games) {
+    assert.ok(!sampleIds.has(game.id),
+      `"${game.id}" is a sample entry from games.example.json, not a real game`);
+  }
 });
 
 test('data/games.example.json covers all three statuses', () => {
