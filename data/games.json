@@ -1,4 +1,13 @@
 {
   "$schema": "./games.schema.json",
-  "games": []
+  "games": [
+    {
+      "id": "blacksmith-simulator",
+      "title": "Blacksmith Simulator",
+      "status": "in-development",
+      "tagline": "Forge weapons that have no business existing.",
+      "description": "Run your own forge, hammering out increasingly unhinged weapons. As the shop grows, hire a crew to work the anvils so the orders keep moving while you chase the next ridiculous build.",
+      "tags": ["simulator", "crafting", "tycoon"]
+    }
+  ]
 }

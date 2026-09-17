@@ -14,6 +14,37 @@
   // Live games surface first; planned games sink to the bottom.
   var STATUS_ORDER = { 'live': 0, 'in-development': 1, 'planned': 2 };
 
+  // Lucide-style glyphs (2.5 stroke, round caps) for the floating status circle.
+  var STATUS_ICON = {
+    'live': ['m6 3 14 9-14 9V3z'],
+    'in-development': [
+      'm15 12-8.4 8.4a1 1 0 1 1-3-3L12 9',
+      'm18 15 4-4',
+      'm21.5 11.5-1.9-1.9A2 2 0 0 1 19 8.2V7l-2.3-2.3a6 6 0 0 0-4.2-1.7L9 3l.9.8A6.2 6.2 0 0 1 12 8.4V10l2 2h1.2a2 2 0 0 1 1.4.6l1.9 1.9'
+    ],
+    'planned': ['M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z', 'M12 6v6l4 2']
+  };
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  /* Built through the DOM rather than markup strings — nothing here is parsed
+     as HTML, which keeps the no-innerHTML rule true for every rendered node. */
+  function buildIcon(status) {
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2.5');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+    (STATUS_ICON[status] || []).forEach(function (d) {
+      var path = document.createElementNS(SVG_NS, 'path');
+      path.setAttribute('d', d);
+      svg.appendChild(path);
+    });
+    return svg;
+  }
+
   var grid = document.getElementById('game-grid');
   var emptyState = document.getElementById('empty-state');
   var errorState = document.getElementById('error-state');
@@ -90,6 +121,10 @@
     var badge = node.querySelector('.badge');
     badge.textContent = STATUS_LABEL[game.status];
     badge.dataset.status = game.status;
+
+    var sticker = node.querySelector('.card-sticker');
+    sticker.dataset.status = game.status;
+    sticker.appendChild(buildIcon(game.status));
 
     var img = node.querySelector('.card-img');
     var fallback = node.querySelector('.card-fallback');

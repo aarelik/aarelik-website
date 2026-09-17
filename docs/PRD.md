@@ -25,7 +25,9 @@ holding zero games, and must absorb new games later without a redesign.
 5. Responsive from 320px to desktop.
 6. Accessible: semantic landmarks, keyboard-reachable controls, visible focus,
    AA contrast, no keyboard traps.
-7. No third-party runtime dependencies, no CDN, no tracking.
+7. No third-party runtime dependencies and no tracking. **Amended:** webfonts
+   are served from the Google Fonts CDN (see Design below) — a deliberate
+   exception, not an oversight. Everything else stays self-contained.
 
 ### Should have
 8. Filter the grid by lifecycle state.
@@ -35,6 +37,29 @@ holding zero games, and must absorb new games later without a redesign.
 ### Out of scope
 - Live Roblox API player counts (requires a proxy; revisit when games ship).
 - CMS, comments, accounts, analytics.
+
+## Design
+
+The site follows the **Playful Geometric** system: primitive shapes, hard
+offset shadows with no blur, chunky 2px borders, pattern fills, and a
+rotational accent palette (violet primary; pink, amber and mint used
+decoratively). Content sits in calm, readable blocks while the space around it
+carries the decoration — "stable grid, wild decoration".
+
+Three translation decisions, since the system is authored for Tailwind/React:
+
+1. **Vanilla CSS custom properties, not Tailwind.** Adding a build step would
+   cost the direct GitHub Pages deploy and the one-file-edit workflow, which
+   requirements 1 and 2 depend on. Hard shadows, pill radii and chunky borders
+   are trivial in plain CSS, so nothing is lost visually.
+2. **Google Fonts CDN for Outfit and Plus Jakarta Sans.** Chosen over
+   self-hosting for simplicity, at the cost of requirement 7's no-CDN clause and
+   a render-blocking third-party request. Self-hosting into `assets/fonts/`
+   remains a drop-in change if that trade stops being worth it.
+3. **A derived dark palette.** The system specifies light only. On a dark
+   ground a slate hard shadow is invisible, so the dark variant uses *colored*
+   hard shadows (violet on cards, pink on featured) to keep the "pop", and the
+   hero blob swaps hue rather than just alpha to avoid muddying to olive.
 
 ## Success criteria
 

@@ -61,7 +61,7 @@ touching your real data.
 npm test
 ```
 
-Twenty checks, no dependencies, via the built-in Node test runner:
+25 checks, no dependencies, via the built-in Node test runner:
 
 - **Data contract** — required fields, kebab-case unique ids, valid status,
   a `url` on every live game, real dates, thumbnails that actually exist.
@@ -71,6 +71,21 @@ Twenty checks, no dependencies, via the built-in Node test runner:
   that exist, visible focus styles, honored reduced-motion preference.
 - **Injection safety** — game text is never written as HTML, and only
   `http(s)` URLs survive sanitising.
+- **Design system** — every colour token is defined, hard shadows carry no
+  blur, the alternate palette stays reachable, and bounce/wiggle/marquee are
+  all disabled under `prefers-reduced-motion`.
+
+## Design
+
+Built on the **Playful Geometric** system — see `docs/PRD.md` for the full
+rationale. Everything is driven by CSS custom properties in the `:root` block
+of `assets/css/styles.css`: change `--accent`, `--secondary`, `--tertiary` or
+`--quaternary` there and the whole site follows, including the dark variant.
+
+Typography is Outfit (headings) and Plus Jakarta Sans (body), loaded from
+Google Fonts. To self-host instead, drop woff2 files in `assets/fonts/`,
+replace the `<link>` in both HTML files with `@font-face` rules, and nothing
+else changes.
 
 ## Deploying
 
@@ -82,7 +97,8 @@ stops Jekyll from stripping anything.
 ```
 index.html            markup and the card <template>
 404.html              not-found page
-assets/css/styles.css single stylesheet, dark by default, light via OS setting
+assets/css/styles.css single stylesheet, Playful Geometric tokens, light
+                      by default with a derived dark variant via OS setting
 assets/js/app.js      loads the data and renders the grid
 data/games.json       ← the file you edit
 data/games.example.json  sample entries

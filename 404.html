@@ -5,30 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page not found — Aarelik</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFFDF5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14121C" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+<div class="confetti" aria-hidden="true">
+  <span class="shape shape-circle shape-1"></span>
+  <span class="shape shape-triangle shape-2"></span>
+  <span class="shape shape-square shape-3"></span>
+  <span class="shape shape-pill shape-4"></span>
+</div>
+
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="./">
-      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-mark" aria-hidden="true"><span class="brand-dot"></span></span>
       <span class="brand-name">Aarelik</span>
     </a>
   </div>
 </header>
+
 <main>
   <section class="games">
     <div class="wrap">
       <div class="empty">
-        <span class="empty-glyph" aria-hidden="true"></span>
+        <span class="empty-glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </span>
         <h1>Page not found</h1>
         <p>That link doesn't go anywhere. The games are back on the home page.</p>
-        <p class="empty-hint"><a href="./">Back to the games</a></p>
+        <p class="empty-hint">
+          <a class="btn btn-primary" href="./">
+            Back to the games
+            <span class="btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        </p>
       </div>
     </div>
   </section>
 </main>
+
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <p>&copy; 2026 Aarelik</p>
